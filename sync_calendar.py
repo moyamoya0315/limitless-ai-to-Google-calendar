@@ -185,12 +185,7 @@ def create_calendar_event(service, calendar_id, event_data, event_key, lifelog_i
         event["location"] = location
 
     created = service.events().insert(calendarId=calendar_id, body=event).execute()
-    logger.info(
-        "イベント作成: %s @ %s (%s)",
-        event_data["summary"],
-        event_data["start_time"],
-        created.get("htmlLink"),
-    )
+    logger.info("イベント作成完了 (lifelog_id=%s)", lifelog_id)
     return created
 
 
@@ -213,14 +208,14 @@ def main():
 
         events = extract_events_with_claude(lifelog)
         if not events:
-            logger.info("登録意図なし: %s", lifelog_title)
+            logger.info("登録意図なし (lifelog_id=%s)", lifelog_id)
             no_intent_count += 1
             continue
 
         for event_data in events:
             event_key = make_event_key(lifelog_id, event_data)
             if is_already_synced(service, calendar_id, event_key):
-                logger.info("スキップ (同期済み): %s", event_data.get("summary"))
+                logger.info("スキップ (同期済み, lifelog_id=%s)", lifelog_id)
                 skipped_count += 1
                 continue
 
