@@ -20,11 +20,11 @@ SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 
 def fetch_lifelogs():
-    """過去20分間のlifelogを取得する"""
+    """過去3時間のlifelogを取得する（cron遅延に対応するため広めに取得）"""
     api_key = os.environ["LIMITLESS_API_KEY"]
     tz = ZoneInfo(TIMEZONE)
     now = datetime.now(tz)
-    start = now - timedelta(minutes=20)
+    start = now - timedelta(hours=3)
 
     params = {
         "timezone": TIMEZONE,
