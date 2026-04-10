@@ -1,9 +1,7 @@
 name: Sync Limitless AI to Google Calendar
 
 on:
-  schedule:
-    - cron: '*/15 * * * *'
-  workflow_dispatch: {}
+  workflow_dispatch: {}  # cron-job.org から正確に15分おきにトリガー
 
 jobs:
   sync:
